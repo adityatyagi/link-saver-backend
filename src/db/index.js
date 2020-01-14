@@ -5,7 +5,7 @@ const {
 const pool = new Pool({
     user: 'aditya',
     host: 'localhost',
-    database: 'todo',
+    database: 'linksaver',
     password: 'toor',
     port: 5432,
 });
