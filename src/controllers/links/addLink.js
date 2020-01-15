@@ -14,7 +14,6 @@ const addLink = async (req, res, next) => {
         const {
             rows
         } = await db.query(query, [title, link_url, description, user_id]);
-        console.log(rows[0]);
         return res.send({
             message: "Link successfully posted!",
             data: rows[0]
