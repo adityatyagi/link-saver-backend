@@ -20,22 +20,24 @@ const createNewPost = async (req, res, next) => {
 
         const postDetails = await db.query(getPostDetails, [postTableRes.rows[0].post_id]);
 
-        return res.send({
-            message: "Post successfully created!",
-            data: {
-                user: {
-                    user_id: postDetails.rows[0].user_id,
-                    email: postDetails.rows[0].email,
-                    name: postDetails.rows[0].name
-                },
-                post: {
-                    post_id: postDetails.rows[0].post_id,
-                    title: postDetails.rows[0].title,
-                    description: postDetails.rows[0].description,
-                    link_urls: postDetails.rows[0].link_urls
+        return res
+            .status(200)
+            .send({
+                message: "Post successfully created!",
+                data: {
+                    user: {
+                        user_id: postDetails.rows[0].user_id,
+                        email: postDetails.rows[0].email,
+                        name: postDetails.rows[0].name
+                    },
+                    post: {
+                        post_id: postDetails.rows[0].post_id,
+                        title: postDetails.rows[0].title,
+                        description: postDetails.rows[0].description,
+                        link_urls: postDetails.rows[0].link_urls
+                    }
                 }
-            }
-        });
+            });
     } catch (error) {
         return next(error);
     }
