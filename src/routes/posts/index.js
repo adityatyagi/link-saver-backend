@@ -5,10 +5,12 @@ const posts = require('../../controllers').postsController;
 const getAllPosts = router.get('/getAllPosts', posts.getAllPosts);
 const createNewPost = router.post('/createNewPost', posts.createNewPost);
 const updatePost = router.put('/updatePost', posts.updatePost);
+const deletePost = router.delete('/deletePost', posts.deletePost);
 
 
 module.exports = [
     getAllPosts,
     createNewPost,
-    updatePost
+    updatePost,
+    deletePost
 ];

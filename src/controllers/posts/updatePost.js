@@ -70,7 +70,7 @@ const updatePost = async (req, res, next) => {
         const postDetails = await db.postDetails(postData.post_id);
 
         return res.status(200).send({
-            message: 'Post updated created!',
+            message: 'Post updated!',
             data: postDetails
         });
     } catch (error) {
