@@ -14,12 +14,7 @@ const pool = new Pool({
 module.exports = {
     // a generic query, that executes all queries you send to it
     query: (text, params) => {
-        console.log(text);
         return pool.query(text, params)
-    },
-    queryWithCallback: (text, params, callback) => {
-        console.log(text);
-        return pool.query(text, params, callback)
     },
     postDetailsWithUserInfo: async (postId, userId) => {
         const getPostDetails =
