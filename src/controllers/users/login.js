@@ -7,6 +7,8 @@ const login = async (req, res, next) => {
             user
         } = req;
 
+        // update last login time and jwt token in the table for JWT STRATEGY
+
         res.status(200).send({
             message: 'Login Successfull',
             data: user
