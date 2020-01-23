@@ -9,7 +9,10 @@ const getUserByUserId = async (req, res, next) => {
         const {
             rows
         } = await db.query(query, [user_id]);
-        return res.send(rows[0]);
+        return res.status(200).send({
+            message: 'Users details fetched successfully',
+            data: rows[0]
+        });
     } catch (error) {
         return next(error);
     }

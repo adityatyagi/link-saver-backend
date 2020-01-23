@@ -6,9 +6,9 @@ const LocalStrategy = require('passport-local').Strategy;
 passport.use(
     new LocalStrategy({
             usernameField: 'email',
-            passwordField: 'pwd'
+            passwordField: 'password'
         },
-        (email, pwd, cb) => {
+        (email, password, cb) => {
 
             db.query('SELECT * FROM users WHERE email=$1', [email])
                 .then(userRes => {
@@ -17,7 +17,7 @@ passport.use(
                     // if there is a user exists with these credentials
                     if (user) {
                         // check if the password is correct
-                        bcrypt.compare(pwd, user.pwd, function (err, res) {
+                        bcrypt.compare(password, user.password, function (err, res) {
                             if (res) {
                                 console.log({
                                     user_id: user.user_id,

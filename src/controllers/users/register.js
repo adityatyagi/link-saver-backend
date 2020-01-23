@@ -7,14 +7,14 @@ const register = async (req, res, next) => {
         const {
             name,
             email,
-            pwd
+            password
         } = req.body;
 
         // hashing the password - encrypting the password
         // higher the number, more time it will take to hash the password but more secure it will be
         const saltRounds = 10;
-        bcrypt.hash(pwd, saltRounds, function (err, hash) {
-            createUserQuery = 'INSERT INTO users(name, email, pwd) VALUES($1, $2, $3) RETURNING user_id, name, email';
+        bcrypt.hash(password, saltRounds, function (err, hash) {
+            createUserQuery = 'INSERT INTO users(name, email, password) VALUES($1, $2, $3) RETURNING user_id, name, email';
             db.query(createUserQuery, [name, email, hash]).then(userRes => {
                 const user = userRes.rows[0];
                 res.status(200).send({

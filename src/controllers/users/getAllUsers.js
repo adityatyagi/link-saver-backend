@@ -7,7 +7,10 @@ const getAllUsers = async (req, res, next) => {
         const {
             rows
         } = await db.query(query);
-        return res.send(rows);
+        return res.status(200).send({
+            message: 'All users fetched successfully',
+            data: rows
+        });
     } catch (error) {
         return next(error);
     }

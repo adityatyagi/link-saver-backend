@@ -12,14 +12,11 @@ const updatePost = async (req, res, next) => {
 
         // updating posts table
         const updatePost =
-            'UPDATE posts set title = $1, description = $2, updated_at = $3 where post_id = $4 AND user_id = $5 RETURNING post_id, title, description, user_id';
-
-        const updated_at = new Date();
+            'UPDATE posts set title = $1, description = $2, updated_on = now() where post_id = $3 AND user_id = $4 RETURNING post_id, title, description, user_id';
 
         const updateTableRes = await db.query(updatePost, [
             postData.title,
             postData.description,
-            updated_at,
             postData.post_id,
             postData.user_id
         ]);
@@ -59,7 +56,7 @@ const updatePost = async (req, res, next) => {
         if (linksToUpdate.length > 0) {
             // update the remaining links
             const updateLinks =
-                'UPDATE links set link_url = new.link_url, updated_at = now() from (select unnest(array[$1::int[]]) as link_id, unnest(array[$2::text[]]) as link_url) as new where links.link_id = new.link_id';
+                'UPDATE links set link_url = new.link_url, updated_on = now() from (select unnest(array[$1::int[]]) as link_id, unnest(array[$2::text[]]) as link_url) as new where links.link_id = new.link_id';
             const updateLinksRes = await db.query(updateLinks, [
                 [linksToUpdate],
                 [linksOfLinksToUpdate]
