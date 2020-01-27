@@ -14,11 +14,11 @@ const {
 
 // prod db
 const pool = new Pool({
-    user: config.db_dev.user,
-    host: config.db_dev.host,
-    database: config.db_dev.database,
-    password: config.db_dev.password,
-    port: config.db_dev.port,
+    user: config.db_prod.user,
+    host: config.db_prod.host,
+    database: config.db_prod.database,
+    password: config.db_prod.password,
+    port: config.db_prod.port,
 });
 
 
