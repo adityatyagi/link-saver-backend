@@ -2,6 +2,8 @@ const db = require('./../db');
 var passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
+const jwt = require('jsonwebtoken');
+const config = require('../../config/defaultConfig.js');
 
 passport.use(
     new LocalStrategy({
@@ -24,10 +26,21 @@ passport.use(
                                     name: user.name,
                                     email: user.email
                                 });
+
+                                const payload = {
+                                    email: user.email,
+                                    id: user.user_id,
+                                    time: new Date()
+                                };
+
+                                // generate token
+                                const token = jwt.sign(payload, config.jwt.appSecret);
+
                                 cb(null, {
                                     user_id: user.user_id,
                                     name: user.name,
-                                    email: user.email
+                                    email: user.email,
+                                    token: token
                                 });
                             } else {
                                 // if the email and password (credentials) by the user do not match with the database
