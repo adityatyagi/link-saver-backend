@@ -22,15 +22,6 @@ const pool = new Pool({
 //   port: config.db_dev.port,
 // });
 
-// prod db
-const pool = new Pool({
-  user: config.db_prod.user,
-  host: config.db_prod.host,
-  database: config.db_prod.database,
-  password: config.db_prod.password,
-  port: config.db_prod.port
-});
-
 module.exports = {
   // a generic query, that executes all queries you send to it
   query: (text, params) => {
