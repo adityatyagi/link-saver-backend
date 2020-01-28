@@ -73,8 +73,6 @@ passport.deserializeUser((user_id, cb) => {
     [parseInt(user_id, 10)],
     (err, results) => {
       if (err) {
-        // winston.error('Error when selecting user on session deserialize', err);
-        console.log('Error when selecting user on session deserialize');
         return cb(err);
       }
       cb(null, results.rows[0]);
