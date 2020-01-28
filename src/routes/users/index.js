@@ -5,7 +5,7 @@ const authMiddleware = require('../../passport/auth');
 const users = require('../../controllers').userController;
 
 const register = router.post('/register', users.register);
-const login = router.get('/login', passport.authenticate('local'), users.login);
+const login = router.post('/login', passport.authenticate('local'), users.login);
 const getAllUsers = router.get('/getAllUsers', authMiddleware.checkAuth, users.getAllUsers);
 const updateUser = router.put('/updateUser', authMiddleware.checkAuth, users.updateUser);
 const getUserByUserId = router.get('/getUserByUserId/:user_id', authMiddleware.checkAuth, users.getUserByUserId);

@@ -24,13 +24,6 @@ app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  session({
-    secret: 'app-secret',
-    resave: true,
-    saveUninitialized: true
-  })
-);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(
