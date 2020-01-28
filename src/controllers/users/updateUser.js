@@ -1,4 +1,5 @@
 const db = require('../../db');
+const utility = require('../../global_functions');
 
 const updateUser = async (req, res, next) => {
   try {
@@ -13,12 +14,10 @@ const updateUser = async (req, res, next) => {
     const {
       rows
     } = await db.query(query, [name, email, user_id]);
-    return res.status(200).send({
-      message: 'User updated successfully',
-      data: rows[0]
-    });
+
+    return utility.successResponse(res, rows[0], 'User updated successfully');
   } catch (error) {
-    return next(error);
+    return utility.badRequestError(error, "Update of user failed");
   }
 };
 

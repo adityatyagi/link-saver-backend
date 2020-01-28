@@ -1,22 +1,25 @@
 const db = require('../../db');
+const utility = require('../../global_functions');
 
 // delete user by user id
 const deleteUserByUserId = async (req, res, next) => {
-    try {
-        const query = 'DELETE FROM users WHERE user_id = $1';
-        const {
-            user_id
-        } = req.params;
-        const {
-            rows
-        } = await db.query(query, [user_id]);
-        return res.send({
-            status: 200,
-            message: 'User deleted successfully!'
-        });
-    } catch (error) {
-        return next(error);
+  try {
+    const {
+      user_id
+    } = req.params;
+
+    // check if the user exists
+    const userRes = await db.query('select * from users where user_id = $1', [user_id]);
+    if (!userRes.rows.length) {
+      return utility.badRequestError(res, "User with this user id does not exist");
     }
+
+    await db.query('delete from users where user_id = $1', [user_id]);
+
+    return utility.noContentResponse(res, 'User deleted successfully!');
+  } catch (error) {
+    return utility.badRequestError(error, "Failed! Cannot delete user");
+  }
 }
 
 

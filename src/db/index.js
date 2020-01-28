@@ -4,6 +4,16 @@ const {
 } = require('pg');
 
 // development db
+const pool = new Pool({
+  user: config.db_dev.user,
+  host: config.db_dev.host,
+  database: config.db_dev.database,
+  password: config.db_dev.password,
+  port: config.db_dev.port
+});
+
+// NOTE: production is deployed from branch: heroku-deploy
+// prod db
 // const pool = new Pool({
 //   user: config.db_dev.user,
 //   host: config.db_dev.host,
@@ -52,5 +62,19 @@ module.exports = {
 
     const postDetailsRes = await pool.query(postDetails, [postId]);
     return postDetailsRes.rows[0];
+  },
+  checkIfUserExists: async user_id => {
+    const userRes = await pool.query('select * from users where user_id =$1', [
+      user_id
+    ]);
+    return userRes.rows.length ? true : false;
+  },
+  checkIfPostsExistsForUser: async (post_id, user_id) => {
+    const postRes = await pool.query(
+      'select * from posts where post_id=$1 and user_id=$2',
+      [post_id, user_id]
+    );
+
+    return postRes.rows.length ? true : false;
   }
 };
