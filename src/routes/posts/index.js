@@ -10,12 +10,10 @@ const updatePost = router.put('/updatePost', authMiddleware.checkAuth, posts.upd
 const deletePost = router.delete('/deletePost', authMiddleware.checkAuth, posts.deletePost);
 
 
-
-
 module.exports = [
-    getAllPosts,
-    createNewPost,
-    updatePost,
-    deletePost,
-    getAllPostsOfUser
+  getAllPosts,
+  createNewPost,
+  updatePost,
+  deletePost,
+  getAllPostsOfUser
 ];

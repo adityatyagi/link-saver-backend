@@ -9,7 +9,7 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 
-// configuring local strategy for user authentication
+
 require('./src/passport/passport');
 
 var indexRouter = require('./src/routes');

@@ -1,4 +1,5 @@
 const db = require('../../db');
+const utility = require('../../global_functions');
 
 // get all users
 const getAllUsers = async (req, res, next) => {
@@ -8,12 +9,9 @@ const getAllUsers = async (req, res, next) => {
       rows
     } = await db.query(query);
 
-    return res.status(200).send({
-      message: 'All users fetched successfully',
-      data: rows
-    });
+    return utility.successResponse(res, rows, 'All users fetched successfully');
   } catch (error) {
-    return next(error);
+    return utility.badRequestError(error, "Failed to get users list");
   }
 }
 
