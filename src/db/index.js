@@ -1,31 +1,28 @@
 const config = require('../../config/defaultConfig');
-const {
-  Pool
-} = require('pg');
+const { Pool } = require('pg');
 
 // development db
-const pool = new Pool({
-  user: config.db_dev.user,
-  host: config.db_dev.host,
-  database: config.db_dev.database,
-  password: config.db_dev.password,
-  port: config.db_dev.port,
-});
-
-// prod db
 // const pool = new Pool({
-//     user: config.db_prod.user,
-//     host: config.db_prod.host,
-//     database: config.db_prod.database,
-//     password: config.db_prod.password,
-//     port: config.db_prod.port,
+//   user: config.db_dev.user,
+//   host: config.db_dev.host,
+//   database: config.db_dev.database,
+//   password: config.db_dev.password,
+//   port: config.db_dev.port,
 // });
 
+// prod db
+const pool = new Pool({
+  user: config.db_prod.user,
+  host: config.db_prod.host,
+  database: config.db_prod.database,
+  password: config.db_prod.password,
+  port: config.db_prod.port
+});
 
 module.exports = {
   // a generic query, that executes all queries you send to it
   query: (text, params) => {
-    return pool.query(text, params)
+    return pool.query(text, params);
   },
   postDetailsWithUserInfo: async (postId, userId) => {
     const getPostDetails =
@@ -45,12 +42,13 @@ module.exports = {
         description: postDetails.rows[0].description,
         link_urls: postDetails.rows[0].link_urls
       }
-    }
+    };
   },
-  postDetails: async (postId) => {
-    const postDetails = "select p.post_id, p.title, p.description, json_agg(json_build_object('link_id', l.link_id, 'link_url', l.link_url)) as link_urls from posts p inner join links l on p.post_id = l.post_id where p.post_id = $1 group by p.post_id";
+  postDetails: async postId => {
+    const postDetails =
+      "select p.post_id, p.title, p.description, json_agg(json_build_object('link_id', l.link_id, 'link_url', l.link_url)) as link_urls from posts p inner join links l on p.post_id = l.post_id where p.post_id = $1 group by p.post_id";
 
     const postDetailsRes = await pool.query(postDetails, [postId]);
     return postDetailsRes.rows[0];
   }
-}
+};
