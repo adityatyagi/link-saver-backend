@@ -29,7 +29,7 @@ module.exports = {
   },
   postDetailsWithUserInfo: async (postId, userId) => {
     const getPostDetails =
-      "select u.user_id, u.email, u.name, p.post_id, p.title, p.description, json_agg(json_build_object('link_id', l.link_id, 'link_url', l.link_url)) as link_urls from users u inner join posts p on u.user_id = p.user_id inner join links l on p.post_id = l.post_id where p.post_id = $1 and p.user_id = $2 group by p.post_id, u.user_id, u.name, u.email;";
+      "select u.user_id, u.email, u.name, p.post_id, p.title, p.description, p.created_on, p.updated_on, json_agg(json_build_object('link_id', l.link_id, 'link_url', l.link_url)) as link_urls from users u inner join posts p on u.user_id = p.user_id inner join links l on p.post_id = l.post_id where p.post_id = $1 and p.user_id = $2 group by p.post_id, u.user_id, u.name, u.email;";
 
     const postDetails = await pool.query(getPostDetails, [postId, userId]);
 
