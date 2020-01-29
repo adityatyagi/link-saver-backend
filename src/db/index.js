@@ -2,24 +2,11 @@ const config = require('../../config/defaultConfig');
 const {
   Pool
 } = require('pg');
+const env_config = require('../../config/config');
 
 // development db
-const pool = new Pool({
-  user: config.db_dev.user,
-  host: config.db_dev.host,
-  database: config.db_dev.database,
-  password: config.db_dev.password,
-  port: config.db_dev.port
-});
-
-// prod db
-// const pool = new Pool({
-//   user: config.db_prod.user,
-//   host: config.db_prod.host,
-//   database: config.db_prod.database,
-//   password: config.db_prod.password,
-//   port: config.db_prod.port
-// });
+console.log(env_config.db);
+const pool = new Pool(env_config.db);
 
 module.exports = {
   // a generic query, that executes all queries you send to it
