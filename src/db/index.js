@@ -55,7 +55,7 @@ module.exports = {
     return postDetailsRes.rows[0];
   },
   checkIfUserExists: async user_id => {
-    const userRes = await pool.query('select * from users where user_id =$1', [
+    const userRes = await pool.query('select * from users where user_id = $1', [
       user_id
     ]);
     return userRes.rows.length ? true : false;
@@ -67,5 +67,17 @@ module.exports = {
     );
 
     return postRes.rows.length ? true : false;
+  },
+  rowCountInTable: async (tableName, user_id) => {
+    let query;
+    if (!user_id) {
+      query = 'select count(*) from ' + tableName;
+    } else {
+      query = 'select count(*) from ' + tableName + ' where user_id = ' + user_id;
+    }
+    const {
+      rows
+    } = await pool.query(query);
+    return rows[0].count;
   }
 };
