@@ -1,3 +1,48 @@
+CREATE TABLE users(
+   user_id serial PRIMARY KEY,
+   name VARCHAR (50) NOT NULL,
+   password TEXT NOT NULL,
+   email VARCHAR (355) UNIQUE NOT NULL,
+   created_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+   updated_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+   last_login TIMESTAMP,
+   token text
+);
+
+select * from users;
+
+create table posts(
+	post_id serial primary key,
+	title varchar (1000) not null,
+	description text not null,
+	user_id integer not null,
+	created_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+   	updated_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+	constraint posts_user_id_fkey foreign key (user_id)
+		references users (user_id) match simple
+		on update no action on delete cascade
+);
+
+select * from posts;
+
+
+
+create table links(
+	link_id serial primary key,
+	link_url text not null,
+	post_id integer not null,
+	created_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+   	updated_on TIMESTAMP NOT null DEFAULT CURRENT_TIMESTAMP,
+   	constraint links_post_id_fkey foreign key (post_id)
+   		references posts (post_id) match simple
+   		on update no action on delete cascade
+);
+
+select * from links;
+
+
+-----------------------------------------------------------------------------------------------------------
+
 alter table links
 rename to posts;
 
@@ -12,7 +57,7 @@ add column link_url text;
 insert into posts(title, description, user_id) VALUES('sample title', 'sample desc', 3);
 
 -- inserting multiple rows into table for an array of values
-insert into links(post_id, link_url) 
+insert into links(post_id, link_url)
 values(5, unnest(array['angular.io/guide/component-interaction', 'angular.io/guide/component-interaction']));
 
 
@@ -40,7 +85,7 @@ select u.user_id, u.email, u."name", p.post_id, p.title, p.description, json_agg
 from users u inner join posts p on u.user_id = p.user_id
 inner join links l on p.post_id = l.post_id where p.post_id = 35 group by p.post_id, u.user_id, u."name", u.email;
 
-select u.user_id, u."name", u.email, p.post_id, p.title, p.description 
+select u.user_id, u."name", u.email, p.post_id, p.title, p.description
 from users u
 inner join posts p on u.user_id = p.user_id;
 
@@ -133,5 +178,21 @@ rename constraint posts_user_id to posts_user_id_fkey;
 select * from users;
 select * from posts;
 select * from links;
+
+-- pagination
+-- LIMIT means retrieve me X number of items, OFFSET means skip Y items.
+--Both of them combined would be: "skip Y items and get me the next X items".
+-- Page - 1 means if you're on the 1st page we don't want to skip any items, but retrieve the first X items.
+-- This is valid when the page number is >= 1.
+select * from posts limit 10 offset 0;
+
+select count(*) from users;
+
+SELECT user_id, name, email FROM users limit 10 offset 0;
+
+
+
+
+
 
 

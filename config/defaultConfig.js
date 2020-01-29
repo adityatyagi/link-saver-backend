@@ -7,10 +7,10 @@ module.exports = {
     "port": 5432,
   },
   "db_prod": {
-    "user": 'oryjswyghzzfpx',
-    "host": 'ec2-52-71-122-102.compute-1.amazonaws.com',
-    "database": 'd2pubsbipujm0j',
-    "password": 'a5069d6230e2464b656f49cfaffc3ab2b5596869dc2e15fd2f386b99e41d4ecb',
+    "user": 'djnkjbkgfjzuwj',
+    "host": 'ec2-3-214-53-225.compute-1.amazonaws.com',
+    "database": 'd5e8nh0g2jj8h8',
+    "password": '5a08b21f39998d9c35cb9dfeb19dfa6c481db4ee8a0892552ae3dcef61c8a271',
     "port": 5432,
   },
   "jwt": {
