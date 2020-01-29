@@ -17,7 +17,7 @@ const createNewPost = async (req, res, next) => {
       );
     }
 
-    const insertIntoPostsTable = 'INSERT INTO posts(title, description, user_id) VALUES($1, $2, $3) RETURNING post_id, title, description, user_id';
+    const insertIntoPostsTable = 'INSERT INTO posts(title, description, user_id) VALUES($1, $2, $3) RETURNING post_id';
     const postTableRes = await db.query(insertIntoPostsTable, [postData.title, postData.description, postData.user_id]);
 
     const insertIntoLinksTable = "INSERT into links(post_id, link_url) values($1, unnest(array[$2::text[]]))";
