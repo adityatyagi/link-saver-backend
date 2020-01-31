@@ -8,16 +8,6 @@ const env_config = require('../../config/config');
 console.log(env_config.db);
 const pool = new Pool(env_config.db);
 
-// NOTE: production is deployed from branch: heroku-deploy
-// prod db
-const pool = new Pool({
-  user: config.db_prod.user,
-  host: config.db_prod.host,
-  database: config.db_prod.database,
-  password: config.db_prod.password,
-  port: config.db_prod.port,
-});
-
 module.exports = {
   // a generic query, that executes all queries you send to it
   query: (text, params) => {
