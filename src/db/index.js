@@ -5,7 +5,6 @@ const {
 const env_config = require('../../config/config');
 
 // development db
-console.log(env_config.db);
 const pool = new Pool(env_config.db);
 
 module.exports = {

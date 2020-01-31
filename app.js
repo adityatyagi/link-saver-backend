@@ -9,6 +9,14 @@ var flash = require('connect-flash');
 var session = require('express-session');
 var passport = require('passport');
 
+// knex
+const {
+  Model
+} = require('objection');
+const knex = require('./src/knex/knex');
+
+// Give the knex instance to objection.
+Model.knex(knex);
 
 require('./src/passport/passport');
 

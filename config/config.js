@@ -23,5 +23,6 @@ module.exports = {
     appSecret: "solidAppSecret"
   },
   saltRounds: 10,
-  port: process.env.NODE_ENV ? process.env.PORT : null
+  port: process.env.NODE_ENV ? process.env.PORT : null,
+  environment: process.env.ENVIRONMENT || 'development'
 }
