@@ -3,7 +3,10 @@ const utility = require('../../global_functions');
 
 const getAllPosts = async (req, res, next) => {
   try {
-    const { page, limit } = req.query;
+    const {
+      page,
+      limit
+    } = req.query;
 
     let currentPage = page ? page : '1';
     let itemsPerPage = limit ? limit : 10;
@@ -51,7 +54,8 @@ const getAllPosts = async (req, res, next) => {
       'All posts successfully fetched'
     );
   } catch (error) {
-    return utility.badRequestError(error, 'Could not get posts.');
+    console.log(error);
+    return utility.badRequestError(res, 'Could not get posts.');
   }
 };
 
